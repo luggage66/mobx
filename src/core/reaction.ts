@@ -1,7 +1,7 @@
 import {IDerivation, IDerivationState, trackDerivedFunction, clearObserving, shouldCompute, isCaughtException} from "./derivation";
 import {IObservable, startBatch, endBatch} from "./observable";
 import {globalState} from "./globalstate";
-import {createInstanceofPredicate, getNextId, invariant, unique, joinStrings} from "../utils/utils";
+import {createInstanceofPredicate, getNextId, invariant, unique, joinStrings, IDisposer} from "../utils/utils";
 import {isSpyEnabled, spyReport, spyReportStart, spyReportEnd} from "./spy";
 import {getMessage} from "../utils/messages";
 
@@ -26,11 +26,10 @@ import {getMessage} from "../utils/messages";
  */
 
 export interface IReactionPublic {
-	dispose(): void;
+	dispose: IDisposer
 }
 
-export interface IReactionDisposer {
-	(): void;
+export interface IReactionDisposer extends IDisposer {
 	$mobx: Reaction;
 	onError(handler: (error: any, derivation: IDerivation) => void);
 }
@@ -187,7 +186,7 @@ function registerErrorHandler(handler) {
 	this.$mobx.errorHandler = handler;
 }
 
-export function onReactionError(handler: (error: any, derivation: IDerivation) => void): () => void {
+export function onReactionError(handler: (error: any, derivation: IDerivation) => void): IDisposer {
 	globalState.globalReactionErrorHandlers.push(handler);
 	return () => {
 		const idx = globalState.globalReactionErrorHandlers.indexOf(handler);

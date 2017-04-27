@@ -6,8 +6,11 @@ export function getGlobal() {
 	return global;
 }
 
-export interface Lambda {
+export interface IDisposer {
 	(): void;
+}
+
+export interface Lambda extends IDisposer {
 	name?: string;
 }
 

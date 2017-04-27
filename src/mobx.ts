@@ -53,7 +53,7 @@ export { toJS                                                 } from "./api/tojs
 export { ITransformer, createTransformer                      } from "./api/createtransformer";
 export { whyRun                                               } from "./api/whyrun";
 
-export { Lambda, isArrayLike                                  } from "./utils/utils";
+export { Lambda, isArrayLike, IDisposer                       } from "./utils/utils";
 export { Iterator                                             } from "./utils/iterable";
 export { IObserverTree, IDependencyTree                       } from "./api/extras";
 
@@ -64,7 +64,7 @@ import { IObserverTree, IDependencyTree, getDependencyTree, getObserverTree } fr
 import { getDebugName, getAtom, getAdministration } from "./types/type-utils";
 import { allowStateChanges } from "./core/action";
 import { spyReport, spyReportEnd, spyReportStart, isSpyEnabled } from "./core/spy";
-import { Lambda, deepEqual } from "./utils/utils";
+import { Lambda, deepEqual, IDisposer } from "./utils/utils";
 import { isComputingDerivation } from "./core/derivation";
 import { setReactionScheduler, onReactionError } from "./core/reaction";
 import { reserveArrayBuffer } from "./types/observablearray";
